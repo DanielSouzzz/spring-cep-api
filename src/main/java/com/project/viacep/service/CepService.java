@@ -1,6 +1,7 @@
 package com.project.viacep.service;
 
 import com.google.gson.Gson;
+import com.project.viacep.dto.CepDTO;
 import com.project.viacep.model.CepResponse;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.net.http.HttpResponse;
 @Service
 public class CepService {
 
-    public CepResponse searchAddress(String cep) {
+    public CepDTO searchAddress(String cep) {
         URI address = URI.create("https://viacep.com.br/ws/" + cep + "/json/");
 
         HttpClient client = HttpClient.newHttpClient();
@@ -25,7 +26,10 @@ public class CepService {
         try {
             response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
-            return new Gson().fromJson(response.body(), CepResponse.class);
+            //return new Gson().fromJson(response.body(), CepDTO.class);
+            CepResponse cepResponse = new Gson().fromJson(response.body(), CepResponse.class);
+            return new CepDTO(cepResponse);
+
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Falha ao obter seu cep, tente novamente!");
         } finally {
