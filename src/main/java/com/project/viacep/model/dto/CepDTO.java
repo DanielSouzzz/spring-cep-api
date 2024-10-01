@@ -1,4 +1,4 @@
-package com.project.viacep.dto;
+package com.project.viacep.model.dto;
 
 import com.project.viacep.model.CepResponse;
 import lombok.AllArgsConstructor;

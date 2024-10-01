@@ -1,6 +1,6 @@
 package com.project.viacep.controller;
 
-import com.project.viacep.dto.CepDTO;
+import com.project.viacep.model.dto.CepDTO;
 import com.project.viacep.service.CepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
