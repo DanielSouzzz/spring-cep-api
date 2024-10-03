@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de CEP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Consultar CEP</h1>
+    <form>
+        <label>Digite o CEP:</label>
+        <input type="text" class="cep" name="cep" placeholder="Ex: 88015-570" required>
+        <button type="submit">Consultar</button>
+    </form>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    const formulario = document.querySelector("form");
+    const iCep = document.querySelector(".cep");
+    const resultDiv = document.getElementById("result");
+
+    function buscarCep(cep) {
+        fetch(`http://localhost:8080/api/cep/${cep}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar o CEP');
+                }
+                return response.json();
+            })
+            .then(data => {
+                resultDiv.innerHTML = `
+                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
+                    <p><strong>Bairro:</strong> ${data.bairro}</p>
+                    <p><strong>Cidade:</strong> ${data.localidade}</p>
+                    <p><strong>Estado:</strong> ${data.uf}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                resultDiv.innerHTML = `<p style="color:red;">Erro ao buscar o CEP.</p>`;
+            });
+    }
+
+    function limpar (){
+        iCep.value = "";
+    }
+
+    formulario.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const cep = iCep.value;
+        buscarCep(cep);
+        limpar();
+    });
+</script>
+</body>
+</html>
