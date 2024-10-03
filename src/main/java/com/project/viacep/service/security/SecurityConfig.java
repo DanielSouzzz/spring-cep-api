@@ -16,6 +16,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/api/cep/{cep}").permitAll()
+                        .requestMatchers("/", "/index.html", "/static/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return httpSec.build();
