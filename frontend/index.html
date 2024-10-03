@@ -71,13 +71,13 @@
         <input type="text" class="cep" name="cep" placeholder="Ex: 88015-570" required>
         <button type="submit">Consultar</button>
     </form>
-    <div class="result" id="result"></div>
+    <div class="result"></div>
 </div>
 
 <script>
     const formulario = document.querySelector("form");
     const iCep = document.querySelector(".cep");
-    const resultDiv = document.getElementById("result");
+    const resultDiv = document.querySelector(".result");
 
     function buscarCep(cep) {
         fetch(`http://localhost:8080/api/cep/${cep}`)

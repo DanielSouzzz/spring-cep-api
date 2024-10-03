@@ -32,7 +32,7 @@ public class CepService {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Falha ao obter seu cep, tente novamente!");
         } finally {
-            System.out.println("Retorno de retorno da api: " + (response != null ? response.statusCode() : null));
+            System.out.println("Retorno da api: " + (response != null ? response.statusCode() : null));
         }
     }
 }
